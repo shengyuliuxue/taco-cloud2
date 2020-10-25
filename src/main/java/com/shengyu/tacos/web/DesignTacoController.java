@@ -1,13 +1,21 @@
-package com.shengyu.tacos;
+package com.shengyu.tacos.web;
 
+import com.shengyu.tacos.Ingredient;
+import com.shengyu.tacos.Taco;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.shengyu.tacos.Ingredient.Type;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -33,5 +41,33 @@ public class DesignTacoController {
         }
         model.addAttribute("design", new Taco());
         return "design";
+    }
+
+    @PostMapping
+    public String processDesign(@Valid Taco design, Errors errors){
+        if(errors.hasErrors()){
+            return "design";
+        }
+        //save the design
+        log.info("processing design: " + design);
+        return "redirect:/orders/current";
+    }
+
+/*    class Design{
+        public String name;
+        public List<Ingredient> ingredients;
+        public Design(){
+            name = "defalut name";
+            ingredients = new ArrayList<Ingredient>();
+        }
+        public String toString(){
+            return name + ingredients.toString();
+        }
+    }*/
+
+    private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type){
+        //需要学习why？
+        return ingredients.stream().filter(x -> x.getType().equals(type))
+                .collect(Collectors.toList());
     }
 }
