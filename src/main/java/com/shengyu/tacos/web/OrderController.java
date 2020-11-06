@@ -53,7 +53,7 @@ public class OrderController {
         }
         orderRepo.save(order);
         sessionStatus.setComplete();
-        //log.info("Order submitted: " + order);
+        log.info("Order submitted: " + order);
         return "redirect:/";
     }
 //end::handlePostWithValidation[]

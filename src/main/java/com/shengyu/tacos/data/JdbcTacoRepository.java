@@ -32,10 +32,16 @@ public class JdbcTacoRepository implements TacoRepository{
 
     private long saveTacoInfo(Taco taco) {
         taco.setCreatedAt(new Date());
-        PreparedStatementCreator psc = new PreparedStatementCreatorFactory(
+
+        PreparedStatementCreatorFactory preparedStatementCreatorFactory = new PreparedStatementCreatorFactory(
                 "insert into Taco(name, createdAt) values(?,?)",
                 Types.VARCHAR, Types.TIMESTAMP
-        ).newPreparedStatementCreator(
+        );
+
+        preparedStatementCreatorFactory.setReturnGeneratedKeys(true);
+
+        PreparedStatementCreator psc =
+                preparedStatementCreatorFactory.newPreparedStatementCreator(
                 Arrays.asList(
                         taco.getName(),
                         new Timestamp(taco.getCreatedAt().getTime())
@@ -48,7 +54,7 @@ public class JdbcTacoRepository implements TacoRepository{
     }
 
     private void saveIngredientToTaco(Ingredient ingredient, long tacoId) {
-        jdbc.update("insert itn Taco_Ingredients (taco, ingredient) " +
+        jdbc.update("insert into Taco_Ingredients (taco, ingredient) " +
                 "values (?, ?)",
                 tacoId, ingredient.getId());
     }

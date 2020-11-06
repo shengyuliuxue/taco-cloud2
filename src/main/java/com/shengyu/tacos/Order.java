@@ -17,27 +17,27 @@ public class Order {
     //end::allButValidation[]
     @NotBlank(message="Name is required")
     //tag::allButValidation[]
-    private String name;
+    private String deliveryName;
     //end::allButValidation[]
 
     @NotBlank(message="Street is required")
     //tag::allButValidation[]
-    private String street;
+    private String deliveryStreet;
     //end::allButValidation[]
 
     @NotBlank(message="City is required")
     //tag::allButValidation[]
-    private String city;
+    private String deliveryCity;
     //end::allButValidation[]
 
     @NotBlank(message="State is required")
     //tag::allButValidation[]
-    private String state;
+    private String deliveryState;
     //end::allButValidation[]
 
     @NotBlank(message="Zip code is required")
     //tag::allButValidation[]
-    private String zip;
+    private String deliveryZip;
     //end::allButValidation[]
 
     @NotBlank(message="Not a valid credit card number")

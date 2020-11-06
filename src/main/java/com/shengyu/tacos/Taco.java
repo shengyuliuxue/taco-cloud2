@@ -7,8 +7,6 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
-// end::allButValidation[]
-// tag::allButValidation[]
 
 @Data
 public class Taco {
@@ -20,6 +18,11 @@ public class Taco {
     @Size(min=5, message="Name must be at least 5 characters long")
     // tag::allButValidation[]
     private String name;
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     // end::allButValidation[]
     @Size(min=1, message="You must choose at least 1 ingredient")
     // tag::allButValidation[]
