@@ -1,8 +1,10 @@
 package com.shengyu.tacos.web;
 
 import com.shengyu.tacos.Order;
+import com.shengyu.tacos.User;
 import com.shengyu.tacos.data.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,10 +49,12 @@ public class OrderController {
 
     //tag::handlePostWithValidation[]
     @PostMapping
-    public String processOrder(@Valid Order order, Errors errors, SessionStatus sessionStatus) {
+    public String processOrder(@Valid Order order, Errors errors, SessionStatus sessionStatus,
+                               @AuthenticationPrincipal User user) {
         if (errors.hasErrors()) {
             return "orderForm";
         }
+        order.setUser(user);
         orderRepo.save(order);
         sessionStatus.setComplete();
         log.info("Order submitted: " + order);
